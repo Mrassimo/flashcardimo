@@ -10,17 +10,17 @@ echo "=================================================="
 if ! command -v brew &> /dev/null; then
     echo "📦 Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # Add Homebrew to PATH
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 else
     echo "✅ Homebrew already installed"
 fi
 
-# Check if Python is installed
-if ! command -v python3 &> /dev/null; then
-    echo "🐍 Installing Python..."
-    brew install python@3.11
-else
-    echo "✅ Python already installed"
-fi
+# Install/Update Python with tkinter
+echo "🐍 Installing/Updating Python with tkinter..."
+brew install python@3.11 || brew upgrade python@3.11
+brew install python-tk@3.11 || brew upgrade python-tk@3.11
 
 # Get the directory where the script is located
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -29,9 +29,13 @@ cd "$DIR"
 # Create virtual environment if it doesn't exist
 if [ ! -d "venv" ]; then
     echo "🌟 Creating virtual environment..."
-    python3 -m venv venv
+    /opt/homebrew/opt/python@3.11/bin/python3 -m venv venv
 else
     echo "✅ Virtual environment already exists"
+    # Remove it and create new one to ensure clean state
+    rm -rf venv
+    echo "🌟 Creating fresh virtual environment..."
+    /opt/homebrew/opt/python@3.11/bin/python3 -m venv venv
 fi
 
 # Activate virtual environment
