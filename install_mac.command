@@ -29,13 +29,13 @@ cd "$DIR"
 # Create virtual environment if it doesn't exist
 if [ ! -d "venv" ]; then
     echo "🌟 Creating virtual environment..."
-    /opt/homebrew/opt/python@3.11/bin/python3 -m venv venv
+    /usr/local/bin/python3 -m venv venv
 else
     echo "✅ Virtual environment already exists"
     # Remove it and create new one to ensure clean state
     rm -rf venv
     echo "🌟 Creating fresh virtual environment..."
-    /opt/homebrew/opt/python@3.11/bin/python3 -m venv venv
+    /usr/local/bin/python3 -m venv venv
 fi
 
 # Activate virtual environment
@@ -57,6 +57,10 @@ if [ ! -f ".env" ]; then
     echo "⚠️ Please edit .env file with your API keys"
     open -a TextEdit .env
 fi
+
+# Start the application and close the terminal when done
+echo "🚀 Starting the application..."
+python gui.py; exit
 
 echo ""
 echo "✨ Installation complete! ✨"
