@@ -45,6 +45,11 @@ if not exist .env (
     notepad .env
 )
 
+:: Start the application and close the command prompt when done
+echo "🚀 Starting the application..."
+python gui.py
+exit
+
 echo.
 echo ✨ Installation complete! ✨
 echo.
